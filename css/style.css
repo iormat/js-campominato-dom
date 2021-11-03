@@ -1,0 +1,97 @@
+/* GENERAL RULES -------------------- */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000;
+    font-size: 20px;
+    color: #fff;
+}
+
+/* HEADER RULES -------------------- */
+header {
+    text-align: center;
+    padding: 20px 0;
+}
+
+header button {
+    padding: 5px 10px;
+    margin: 10px 30px;
+    font-size: 1rem;
+    border: 0;
+    border-radius: 20px;
+}
+
+header button:hover:enabled {
+    background-color: cornflowerblue;
+    color: #fff;
+    cursor: pointer;
+}
+
+#diff_selection {
+    width: 200px;
+}
+
+header button#change-difficulty {
+    background-color: tomato;
+}
+
+/* MAIN RULES -------------------- */
+#minefield {
+    width: 70%;
+    min-height: calc(100vh - 135px);
+    margin: 0 auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+    font-size: 2rem;
+    min-width: 47px;
+}
+
+.square:hover {
+    cursor: pointer;
+}
+
+.square:after {
+    content: "";
+    padding-top: 100%;
+}
+
+/* squares based on difficulty */
+.square.easy {
+    width: calc(100% / 10 - 10px);
+    margin: 5px;
+    border: 5px solid #cecece;
+}
+
+.square.medium {
+    width: calc(100% / 9 - 10px);
+    margin: 5px;
+    border: 5px solid #cecece;
+}
+
+.square.hard {
+    width: calc(100% / 7 - 10px);
+    margin: 5px;
+    border: 5px solid #cecece;
+}
+
+/* on click reaction of squares */
+.square.active {
+    background-color: #fff;
+}
+.square.bomb {
+    background-color: red;
+}
