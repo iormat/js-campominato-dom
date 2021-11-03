@@ -35,13 +35,12 @@ PARTE SECONDA
 5. if cell number macthes "bomb" number = game over
 */
 
-// 4.1
-const bombArr = [];
+
 // point counter counter
-let click = 0;
 const mineField = document.getElementById('minefield');
 // 1.
 const diffSelection = document.getElementById('diff_selection');
+let checkActive;
 
 //function to create squares
 function createSquare(squareCont, squareStyle, gameDiff) {
@@ -57,46 +56,54 @@ function randomNumberGener(min, max) {
 document.getElementById('start_game').addEventListener('click',
 
     function() {
+        // 4.1
+        let bombArr = [];
+        let points = 0;
         // delete eventual already created grid
         mineField.innerHTML = "";
         // take chosen difficulty 
         if(diffSelection.value === "1"){
-            difficulty = 101;
+            difficulty = 100;
             gameDiff = 'easy';
         }else if(diffSelection.value === "2"){
-            difficulty = 82;
+            difficulty = 81;
             gameDiff = 'medium';
         }else if(diffSelection.value === "3"){
-            difficulty = 50;
+            difficulty = 49;
             gameDiff = 'hard';
         }
+
         // 2.
-        for(let i = 1; i < difficulty; i++) {
+        for(let i = 1; i <= difficulty; i++) {
             let newElement = createSquare('div', 'square', gameDiff);
             mineField.appendChild(newElement);
+            //tirandolo fuori dal secondo listener mostra direttamente tutte le bombe
+            if(bombArr.includes(i)) {
+                newElement.classList.add('bomb');
+                newElement.innerHTML = `&ohm;`;
+            }
             // 3.
+            for (let i = 0; bombArr.length < 16; i++) {
+                let randNum = randomNumberGener(1, difficulty);
+                if (bombArr.includes(randNum) === false){
+                    bombArr.push(randNum);
+                } 
+            }
             newElement.addEventListener('click',
                 function(){
-                    document.getElementById('score').innerHTML = ++click;
+                    checkActive = parseInt(document.querySelectorAll('.active').length);
                     // 4.2.
-                    for (let i = 0; bombArr.length < 16; i++) {
-                        let randNum = randomNumberGener(1, difficulty);
-                        if (bombArr.includes(randNum) === false){
-                        bombArr.push(randNum);
-                        } 
-                    }
                     if(bombArr.includes(i)) {
                         newElement.classList.add('bomb');
                         newElement.innerHTML = `&ohm;`;
-                        alert(`mi dispiace, ma hai perso! Hai totalizzato: ${click - 1} punti`);
+                        alert(`mi dispiace, ma hai perso! Hai totalizzato: ${points - 1} punti`);
                         window.location.reload();
                     }else {
                         newElement.innerHTML = i;
-                        newElement.classList.add('active');    
+                        newElement.classList.add('active');
+                        document.getElementById('score').innerHTML = ++points;    
                     }
-                    console.log(bombArr)
-
-                    if(click === 16) {
+                     if(parseInt(difficulty) - checkActive === 18) {
                         alert(`Congratulazioni! Non so come tu abbia fatto, ma hai VINTO!`)
                     }
                 }
@@ -104,3 +111,4 @@ document.getElementById('start_game').addEventListener('click',
         }
     }
 );
+
